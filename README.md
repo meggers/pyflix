@@ -4,6 +4,9 @@ A client/server for the Fall 2015 ECE 537 Communication Networks Project
 ## Message API
 
 ```
+
+Total Size: 2179 bytes (after converted to string)
+
 {
     (required)
     frm: Integer,       // Frame Number (either ack or request)
