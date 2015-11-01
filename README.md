@@ -3,6 +3,7 @@ A client/server for the Fall 2015 ECE 537 Communication Networks Project
 
 ## Message API
 
+```
 {
     (required)
     frm: Integer,       // Frame Number (either ack or request)
@@ -14,3 +15,4 @@ A client/server for the Fall 2015 ECE 537 Communication Networks Project
     prm: Integer,       // Command Parameter, in frame numbers (for sriping) 
     dta: Hex            // Movie Data, encoded in hexadecimal
 }
+```
