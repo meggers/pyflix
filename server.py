@@ -20,9 +20,7 @@ def seed_movie():
     with open('movie_data.csv', 'rb') as csvfile:
         data = csv.reader(csvfile)
         for row in data:
-            frame_no = row[0]
-            frame_data = row[1]
-
+            frame_no, frame_data = row[0], row[1]
             movie_data[frame_no] = frame_data
 
     return movie_data

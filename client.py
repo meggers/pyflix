@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, getopt, json
+import time, threading, FrameBuffer
 
 # UDP static info
 UDP_HOSTNAME = "0.0.0.0"
@@ -9,24 +9,21 @@ UDP_PORT = 5000
 # server list
 servers = ["10.0.0.1", "10.0.0.2", "10.0.0.3", "10.0.0.4"]
 
-# message size
+def movie_watcher(frame_buffer):
+  while True:
+    try:
+      frame_no, frame_data = frame_buffer.get_frame()
+      print frame_no
+      time.sleep(0.01)
+    except Queue.Empty:
+      pass
 
 def main(argv):
     global UDP_HOSTNAME, UDP_PORT
 
-    # parse our command line arguments
-    try:
-      opts, args = getopt.getopt(argv, "u:m:s:", ["username=","moviename=","starttime="])
-    except getopt.GetoptError:
-      print 'client.py -u <username> -m <moviename> -s <starttime>'
-      sys.exit(2)
-    for opt, arg in opts:
-        if opt in ("-u", "--username"):
-            username = arg
-        elif opt in ("-m", "--moviename"):
-            moviename = arg
-        elif opt in ("-s", "--starttime"):
-            starttime = arg
+    frame_buffer = FrameBuffer(32)
+
+    watcher = threading.Thread(target=movie_watcher, args=(frame_buffer,))
 
 if __name__ == "__main__":
-   main(sys.argv[1:])
+   main()
