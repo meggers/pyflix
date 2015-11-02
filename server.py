@@ -1,15 +1,34 @@
-import SocketServer
+import csv, json, SocketServer
 
-class MyUDPHandler(SocketServer.BaseRequestHandler):
+class RequestHandler(SocketServer.BaseRequestHandler):
 
     def handle(self):
-        data = self.request[0].strip()
+        request_message = json.loads(self.request[0])
         socket = self.request[1]
-        print "{} wrote:".format(self.client_address[0])
-        print data
-        socket.sendto(data, self.client_address)
+
+        frame_no = request_message['frm']
+        response = {
+            "frm": frame_no,
+            "dta": self.server.movie_data[frame_no]
+        }
+
+        socket.sendto(response, self.client_address)
+
+def seed_movie():
+
+    movie_data = {}
+    with open('movie_data.csv', 'rb') as csvfile:
+        data = csv.reader(csvfile)
+        for row in data:
+            frame_no = row[0]
+            frame_data = row[1]
+
+            movie_data[frame_no] = frame_data
+
+    return movie_data
 
 if __name__ == "__main__":
-    HOST, PORT = "localhost", 9999
-    server = SocketServer.UDPServer((HOST, PORT), MyUDPHandler)
+    HOST, PORT = "localhost", 5000
+    server = SocketServer.UDPServer((HOST, PORT), RequestHandler)
+    server.movie_data = seed_movie()
     server.serve_forever()

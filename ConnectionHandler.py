@@ -28,6 +28,5 @@ class ConnectionHandler:
         while True:
             data, addr = sock.recvfrom(FRAME_SIZE)
             if data:
-                print_message("Response received.")
                 sock.close()
                 return data
