@@ -12,7 +12,7 @@ class RequestHandler(SocketServer.BaseRequestHandler):
             "dta": self.server.movie_data[frame_no]
         }
 
-        socket.sendto(response, self.client_address)
+        socket.sendto(json.dumps(response), self.client_address)
 
 def seed_movie():
 
@@ -28,5 +28,9 @@ def seed_movie():
 if __name__ == "__main__":
     HOST, PORT = "localhost", 5000
     server = SocketServer.UDPServer((HOST, PORT), RequestHandler)
+
+    print "Seeding movie data..."
     server.movie_data = seed_movie()
+
+    print "Listening for requests..."
     server.serve_forever()

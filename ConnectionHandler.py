@@ -6,7 +6,7 @@ class ConnectionHandler:
 
     FRAME_SIZE = 4096
 
-    def __init__(self, hostname, port, servers):
+    def __init__(self, hostname, port, servers, data_buffer):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.bind((hostname, port))
 
@@ -20,8 +20,6 @@ class ConnectionHandler:
 
         for connection in self.connections:
             if self.connection.ready():
-
-        print_message("Request sent.")
 
     # listens on udp port for any response
     def listen(sock):

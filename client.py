@@ -16,6 +16,7 @@ def movie_watcher(frame_buffer):
       print frame_no
       time.sleep(0.01)
     except Queue.Empty:
+      time.sleep(0.001)
       pass
 
 def main(argv):
