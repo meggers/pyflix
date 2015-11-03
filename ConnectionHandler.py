@@ -1,30 +1,37 @@
 #!/usr/bin/python
 
-import socket
+import json, threading, SocketServer
 
-class ConnectionHandler:
+class DataHandler(SocketServer.BaseRequestHandler):
 
-    FRAME_SIZE = 4096
+    def handle(self):
+        response_message = json.loads(self.request[0])
+        socket = self.request[1]
 
-    def __init__(self, hostname, port, servers, data_buffer):
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.bind((hostname, port))
+        frame_no = int(request_message['frm'])
 
-        self.connections = []
-        for ip in servers:
-            self.connections.append(ServerConnection(sock, ip))
+        if self.server.data_buffer.add_frame(frame_no, request_message['dta']):
+            request_frame = frame_no + 4
+        else:
+            request_frame = frame_no
 
-    # sends text over udp using global udp info
-    def send_request(sock, message):
-        sock.sendto(message, (address, 5000))
+        request = {"frm": request_frame}
 
-        for connection in self.connections:
-            if self.connection.ready():
+        socket.sendto(json.dumps(request), self.client_address)
 
-    # listens on udp port for any response
-    def listen(sock):
-        while True:
-            data, addr = sock.recvfrom(FRAME_SIZE)
-            if data:
-                sock.close()
-                return data
+class ConnectionHandler(threading.Thread):
+
+    def __init__(self, hostname, port, server_ips, data_buffer):
+        self.port = port
+        self.server_ips = server_ips
+        self.server = SocketServer.UDPServer((hostname, port), DataHandler)
+        self.server.data_buffer = data_buffer
+        threading.Thread.__init__ (self)
+
+    def run(self):
+        print "Starting movie stream..."
+        for index, ip in enumerate(self.server_ips):
+            self.server.socket.sendto(json.dumps({"frm": index}), (ip, self.port))
+
+        print "Listening on port..."
+        self.server.serve_forever()

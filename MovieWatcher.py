@@ -1,5 +1,6 @@
-import threading
-import time
+#!/usr/bin/python
+
+import threading, time
 
 class MovieWatcher(threading.Thread):
     
