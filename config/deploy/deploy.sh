@@ -22,16 +22,16 @@ VM8="mkellihe@pcvm3-10.instageni.utc.edu"
 echo "UPLOADING SERVER FILES..."
 
 for f in $( ls $DIR/servers/ ); do
-    sudo scp -i $RSA_ID $DIR/servers/$f $VM1:~/
-    sudo scp -i $RSA_ID $DIR/servers/$f $VM2:~/
-    sudo scp -i $RSA_ID $DIR/servers/$f $VM3:~/
-    sudo scp -i $RSA_ID $DIR/servers/$f $VM4:~/
+    sudo scp -r -i $RSA_ID $DIR/servers/$f $VM1:~/
+    sudo scp -r -i $RSA_ID $DIR/servers/$f $VM2:~/
+    sudo scp -r -i $RSA_ID $DIR/servers/$f $VM3:~/
+    sudo scp -r -i $RSA_ID $DIR/servers/$f $VM4:~/
 done
 
 echo "UPLOADING CLIENT FILES..."
 
 for f in $( ls $DIR/client/ ); do
-    sudo scp -i $RSA_ID $DIR/client/$f $VM8:~/
+    sudo scp -r -i $RSA_ID $DIR/client/$f $VM8:~/
 done
 
 
