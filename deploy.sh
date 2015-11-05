@@ -7,14 +7,14 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 RSA_ID="${DIR}/id_geni_ssh_rsa"
 
 # node names
-VM1="mkellihe@pcvm3-3.instageni.utc.edu"
-VM2="mkellihe@pcvm3-4.instageni.utc.edu"
-VM3="mkellihe@pcvm3-5.instageni.utc.edu"
-VM4="mkellihe@pcvm3-6.instageni.utc.edu"
-VM5="mkellihe@pcvm3-7.instageni.utc.edu"
-VM6="mkellihe@pcvm3-8.instageni.utc.edu"
-VM7="mkellihe@pcvm3-9.instageni.utc.edu"
-VM8="mkellihe@pcvm3-10.instageni.utc.edu"
+VM1="${1}@pcvm3-3.instageni.utc.edu"
+VM2="${1}@pcvm3-4.instageni.utc.edu"
+VM3="${1}@pcvm3-5.instageni.utc.edu"
+VM4="${1}@pcvm3-6.instageni.utc.edu"
+VM5="${1}@pcvm3-7.instageni.utc.edu"
+VM6="${1}@pcvm3-8.instageni.utc.edu"
+VM7="${1}@pcvm3-9.instageni.utc.edu"
+VM8="${1}@pcvm3-10.instageni.utc.edu"
 
 echo "GENERATING MOVIE DATA..."
 python generate_data.py
