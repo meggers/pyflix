@@ -10,7 +10,7 @@ class FrameBuffer:
         self.buffer = Queue.Queue(self.length)
 
     def add_frame(self, frame_number, frame):
-        if not self.buffer.full() and self.last_frame_no == frame_number + 1:
+        if not self.buffer.full() and self.last_frame_no + 1 == frame_number:
             self.buffer.put((frame_number, frame))
             self.last_frame_no = frame_number
             return True
