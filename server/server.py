@@ -9,7 +9,6 @@ class RequestHandler(SocketServer.BaseRequestHandler):
         frame_no = int(request_message['frm'])
 
         print "Handling request for {0}".format(frame_no)
-        print list(self.server.movie_data.keys())[1:10]
         response = {
             "frm": frame_no,
             "dta": self.server.movie_data[frame_no]
@@ -23,8 +22,9 @@ def seed_movie():
     with open('movie_data.csv', 'rb') as csvfile:
         data = csv.reader(csvfile)
         for row in data:
+            print row[0]
             frame_no, frame_data = row[0], row[1]
-            movie_data[frame_no] = frame_data
+            movie_data[int(frame_no)] = frame_data
 
     return movie_data
 
