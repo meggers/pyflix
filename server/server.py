@@ -1,4 +1,4 @@
-import csv, json, SocketServer
+import csv, json, SocketServer, binascii, sys
 
 class RequestHandler(SocketServer.BaseRequestHandler):
 
@@ -23,7 +23,7 @@ def seed_movie():
         data = csv.reader(csvfile)
         for row in data:
             frame_no, frame_data = row[0], row[1]
-            movie_data[int(frame_no)] = frame_data
+            movie_data[int(frame_no)] = binascii.unhexlify(frame_data)
 
     return movie_data
 
