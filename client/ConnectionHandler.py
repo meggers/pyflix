@@ -8,9 +8,9 @@ class DataHandler(SocketServer.BaseRequestHandler):
         response_message = json.loads(self.request[0])
         socket = self.request[1]
 
-        frame_no = int(request_message['frm'])
+        frame_no = int(response_message['frm'])
 
-        if self.server.data_buffer.add_frame(frame_no, request_message['dta']):
+        if self.server.data_buffer.add_frame(frame_no, response_message['dta']):
             request_frame = frame_no + 4
         else:
             request_frame = frame_no
