@@ -17,9 +17,11 @@ def main():
   frame_buffer = FrameBuffer(32)
 
   movie_stream = ConnectionHandler(UDP_HOSTNAME, UDP_PORT, servers, frame_buffer)
+  movie_stream.setDaemon(True)
   movie_stream.start()
 
   movie_thread = MovieWatcher(frame_buffer)
+  movie_thread.setDaemon(True)
   movie_thread.start()
 
 if __name__ == "__main__":
