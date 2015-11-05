@@ -16,9 +16,12 @@ VM6="mkellihe@pcvm3-8.instageni.utc.edu"
 VM7="mkellihe@pcvm3-9.instageni.utc.edu"
 VM8="mkellihe@pcvm3-10.instageni.utc.edu"
 
-echo "UPLOADING SERVER FILES..."
 
-for f in $( ls $DIR/servers/ ); do
+echo "GENERATING MOVIE DATA..."
+python generate_data.py
+
+echo "UPLOADING SERVER FILES..."
+for f in $( ls $DIR/server/ ); do
     sudo scp -r -i $RSA_ID $DIR/servers/$f $VM1:~/
     sudo scp -r -i $RSA_ID $DIR/servers/$f $VM2:~/
     sudo scp -r -i $RSA_ID $DIR/servers/$f $VM3:~/
@@ -26,7 +29,6 @@ for f in $( ls $DIR/servers/ ); do
 done
 
 echo "UPLOADING CLIENT FILES..."
-
 for f in $( ls $DIR/client/ ); do
     sudo scp -r -i $RSA_ID $DIR/client/$f $VM8:~/
 done
