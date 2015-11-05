@@ -7,7 +7,7 @@ class RequestHandler(SocketServer.BaseRequestHandler):
         socket = self.request[1]
 
         frame_no = request_message['frm']
-        
+
         print "Handling request for {0}".format(frame_no)
         response = {
             "frm": frame_no,
@@ -28,7 +28,7 @@ def seed_movie():
     return movie_data
 
 if __name__ == "__main__":
-    HOST, PORT = "localhost", 5000
+    HOST, PORT = "0.0.0.0", 5000
     server = SocketServer.UDPServer((HOST, PORT), RequestHandler)
 
     print "Seeding movie data..."
