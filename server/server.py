@@ -22,7 +22,6 @@ def seed_movie():
     with open('movie_data.csv', 'rb') as csvfile:
         data = csv.reader(csvfile)
         for row in data:
-            print row[0]
             frame_no, frame_data = row[0], row[1]
             movie_data[int(frame_no)] = frame_data
 
