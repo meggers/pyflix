@@ -1,4 +1,4 @@
-import csv, json, SocketServer, binascii, sys
+import json, SocketServer, binascii, struct
 
 class RequestHandler(SocketServer.BaseRequestHandler):
 
@@ -19,11 +19,15 @@ class RequestHandler(SocketServer.BaseRequestHandler):
 def seed_movie():
 
     movie_data = {}
-    with open('movie_data.csv', 'rb') as csvfile:
-        data = csv.reader(csvfile)
-        for row in data:
-            frame_no, frame_data = row[0], row[1]
-            movie_data[int(frame_no)] = binascii.unhexlify(frame_data)
+    with open('movie_data.bin', 'rb') as f:
+        frame_bin = f.read(1024)
+        frame_no = 0
+        while frame_bin != "":
+            movie_data[frame_no] = frame_bin
+
+            frame_no += 1
+            frame_bin = f.read(1024)
+        #print struct.unpack("I", frame_bin[0:3])[0]
 
     return movie_data
 
