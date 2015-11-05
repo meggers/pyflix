@@ -16,7 +16,6 @@ VM6="mkellihe@pcvm3-8.instageni.utc.edu"
 VM7="mkellihe@pcvm3-9.instageni.utc.edu"
 VM8="mkellihe@pcvm3-10.instageni.utc.edu"
 
-
 echo "GENERATING MOVIE DATA..."
 python generate_data.py
 
