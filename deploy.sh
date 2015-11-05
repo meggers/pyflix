@@ -3,7 +3,6 @@
 # get the directory of this script
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-
 # RSA key
 RSA_ID="${DIR}/id_geni_ssh_rsa"
 
@@ -16,8 +15,6 @@ VM5="mkellihe@pcvm3-7.instageni.utc.edu"
 VM6="mkellihe@pcvm3-8.instageni.utc.edu"
 VM7="mkellihe@pcvm3-9.instageni.utc.edu"
 VM8="mkellihe@pcvm3-10.instageni.utc.edu"
-
-
 
 echo "UPLOADING SERVER FILES..."
 
@@ -33,18 +30,5 @@ echo "UPLOADING CLIENT FILES..."
 for f in $( ls $DIR/client/ ); do
     sudo scp -r -i $RSA_ID $DIR/client/$f $VM8:~/
 done
-
-
-echo "UPLOADING COMMON FILES..."
-
-for f in $( ls $DIR/common/ ); do
-    sudo scp -i $RSA_ID $DIR/common/$f $VM1:~/
-    sudo scp -i $RSA_ID $DIR/common/$f $VM2:~/
-    sudo scp -i $RSA_ID $DIR/common/$f $VM3:~/
-    sudo scp -i $RSA_ID $DIR/common/$f $VM4:~/
-    sudo scp -i $RSA_ID $DIR/common/$f $VM8:~/
-done
-
-
 
 echo "DONE"
