@@ -21,10 +21,10 @@ python generate_data.py
 
 echo "UPLOADING SERVER FILES..."
 for f in $( ls $DIR/server/ ); do
-    sudo scp -r -i $RSA_ID $DIR/servers/$f $VM1:~/
-    sudo scp -r -i $RSA_ID $DIR/servers/$f $VM2:~/
-    sudo scp -r -i $RSA_ID $DIR/servers/$f $VM3:~/
-    sudo scp -r -i $RSA_ID $DIR/servers/$f $VM4:~/
+    sudo scp -r -i $RSA_ID $DIR/server/$f $VM1:~/
+    sudo scp -r -i $RSA_ID $DIR/server/$f $VM2:~/
+    sudo scp -r -i $RSA_ID $DIR/server/$f $VM3:~/
+    sudo scp -r -i $RSA_ID $DIR/server/$f $VM4:~/
 done
 
 echo "UPLOADING CLIENT FILES..."
