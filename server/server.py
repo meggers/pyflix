@@ -9,7 +9,7 @@ class RequestHandler(SocketServer.BaseRequestHandler):
         frame_no = int(request_message['frm'])
 
         print "Handling request for {0}".format(frame_no)
-        print list(self.server.movie_data.keys()][0]
+        print list(self.server.movie_data.keys())[1:10]
         response = {
             "frm": frame_no,
             "dta": self.server.movie_data[frame_no]
