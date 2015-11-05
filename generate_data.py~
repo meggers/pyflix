@@ -2,7 +2,7 @@
 
 import os,binascii
 
-csv_file = "server/movie_data.csv"
+csv_file = "movie_data.csv"
 frame_size = 1024
 num_frames = 30000
 
