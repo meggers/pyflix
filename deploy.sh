@@ -16,24 +16,12 @@ VM6="${1}@pcvm3-8.instageni.utc.edu"
 VM7="${1}@pcvm3-9.instageni.utc.edu"
 VM8="${1}@pcvm3-10.instageni.utc.edu"
 
-
-if [ "$2" = "nomovie" ]; then
-    IGNORE_MOVIE=1
-else
-    IGNORE_MOVIE=0
-fi
-
-
-
-echo "GENERATING MOVIE DATA..."
-
-if [ "$IGNORE_MOVIE" = 0 ]; then
+if [ "$2" == "seed" ]; then
+    echo "GENERATING MOVIE DATA..."
     python generate_data.py
 else
-    rm $DIR/server/movie_data.csv
+    rm server/movie_data.bin
 fi
-
-
 
 echo "UPLOADING SERVER FILES..."
 for f in $( ls $DIR/server/ ); do
