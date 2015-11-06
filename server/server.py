@@ -1,4 +1,4 @@
-import json, SocketServer, binascii, struct
+import json, SocketServer
 
 class RequestHandler(SocketServer.BaseRequestHandler):
 
@@ -9,15 +9,11 @@ class RequestHandler(SocketServer.BaseRequestHandler):
         frame_no = int(request_message['frm'])
 
         print "Handling request for {0}".format(frame_no)
-        response = {
-            "frm": frame_no,
-            "dta": self.server.movie_data[frame_no]
-        }
 
+        response = self.server.movie_data[frame_no]
         socket.sendto(json.dumps(response), self.client_address)
 
 def seed_movie():
-
     movie_data = {}
     with open('movie_data.bin', 'rb') as f:
         frame_bin = f.read(1024)
@@ -27,7 +23,6 @@ def seed_movie():
 
             frame_no += 1
             frame_bin = f.read(1024)
-        #print struct.unpack("I", frame_bin[0:3])[0]
 
     return movie_data
 
