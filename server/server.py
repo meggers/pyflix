@@ -15,14 +15,11 @@ class RequestHandler(SocketServer.BaseRequestHandler):
 
 def seed_movie():
     movie_data = {}
-    with open('movie_data.bin', 'rb') as f:
-        frame_bin = f.read(1024)
-        frame_no = 0
-        while frame_bin != "":
-            movie_data[frame_no] = frame_bin
-
-            frame_no += 1
-            frame_bin = f.read(1024)
+    with open('movie_data.txt', 'rb') as f:
+        lines = f.readlines()
+        for line in lines:
+            frame_no = int(line[:5])
+            move_data[frame_no] = line
 
     return movie_data
 

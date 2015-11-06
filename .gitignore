@@ -60,6 +60,5 @@ target/
 
 id_geni_ssh_rsa
 
-movie_data.csv
-
+movie_data.*
 *.bin
