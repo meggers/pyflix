@@ -1,16 +1,19 @@
 #!/usr/bin/python
 
-import json, threading, SocketServer
+import json, threading, SocketServer, os, struct
 
 class DataHandler(SocketServer.BaseRequestHandler):
 
     def handle(self):
-        response_message = json.loads(self.request[0])
+        response_message = self.request[0]
         socket = self.request[1]
 
-        frame_no = int(response_message['frm'])
+        print response_message
+        print type(response_message)
+        print os.getsizeof(response_message)
+        frame_no = struct.unpack("I", frame_bin[0:3])[0]
 
-        if self.server.data_buffer.add_frame(frame_no, response_message['dta']):
+        if self.server.data_buffer.add_frame(frame_no, response_message):
             request_frame = frame_no + 4
         else:
             request_frame = frame_no
