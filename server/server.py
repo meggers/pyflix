@@ -9,7 +9,6 @@ class RequestHandler(SocketServer.BaseRequestHandler):
         frame_no = int(request_message['frm'])
 
         print "Handling request for {0}".format(frame_no)
-
         response = self.server.movie_data[frame_no]
         socket.sendto(json.dumps(response), self.client_address)
 
@@ -18,8 +17,9 @@ def seed_movie():
     with open('movie_data.txt', 'rb') as f:
         lines = f.readlines()
         for line in lines:
+            clean_line = line.rstrip()
             frame_no = int(line[:5])
-            move_data[frame_no] = line
+            movie_data[frame_no] = line
 
     return movie_data
 

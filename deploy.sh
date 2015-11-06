@@ -20,7 +20,7 @@ if [ "$2" == "seed" ]; then
     echo "GENERATING MOVIE DATA..."
     python generate_data.py
 else
-    rm server/movie_data.bin
+    rm server/movie_data.txt
 fi
 
 echo "UPLOADING SERVER FILES..."

@@ -11,6 +11,7 @@ Commands:
 
 VM1: File Server #1
 ssh -i id_geni_ssh_rsa mkellihe@pcvm3-3.instageni.utc.edu
+ssh -i id_geni_ssh_rsa maxegger@pcvm3-3.instageni.utc.edu
 
 VM2: File Server #2
 ssh -i id_geni_ssh_rsa mkellihe@pcvm3-4.instageni.utc.edu

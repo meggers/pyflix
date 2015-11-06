@@ -5,7 +5,7 @@ import json, threading, SocketServer
 class DataHandler(SocketServer.BaseRequestHandler):
 
     def handle(self):
-        response_message = self.request[0]
+        response_message = self.request[0][1:-1]
         socket = self.request[1]
 
         frame_no = int(response_message[:5])

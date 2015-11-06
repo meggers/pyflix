@@ -13,4 +13,5 @@ class MovieWatcher(threading.Thread):
         while True:
             frame = self.frame_buffer.get_frame()
             if frame is not None:
-                print frame[0]
+                if frame[0] % 100 == 0:
+                    print frame[0] 
