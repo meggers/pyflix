@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import threading, time
+import sys, time, threading
 
 class MovieWatcher(threading.Thread):
     
@@ -10,6 +10,14 @@ class MovieWatcher(threading.Thread):
         threading.Thread.__init__ (self)
     
     def run(self):
+        # wait until queue is buffered
+        while True:
+            if self.frame_buffer.ready():
+                break
+            else:
+                time.sleep(.5)
+
+        # watch movie
         while True:
             frame = self.frame_buffer.get_frame()
             if frame is not None:

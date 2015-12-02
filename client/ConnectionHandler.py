@@ -2,7 +2,7 @@
 
 import json, threading, SocketServer
 
-class DataHandler(SocketServer.BaseRequestHandler):
+class DataHandler(SocketServer.StreamRequestHandler):
 
     def handle(self):
         response_message = self.request[0][1:-1]

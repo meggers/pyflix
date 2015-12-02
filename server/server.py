@@ -1,16 +1,21 @@
 import json, SocketServer
 
-class RequestHandler(SocketServer.BaseRequestHandler):
+class RequestHandler(SocketServer.StreamRequestHandler):
 
     def handle(self):
-        request_message = json.loads(self.request[0])
-        socket = self.request[1]
+        while 1:
+            if self.command == "Start":
+                response = self.server.movie_data[start_frame]
+                self.wfile.write(response)
 
-        frame_no = int(request_message['frm'])
+            self.rfile.readline().strip()
+            request_message = json.loads(self.rfile.readline().strip())
 
-        print "Handling request for {0}".format(frame_no)
-        response = self.server.movie_data[frame_no]
-        socket.sendto(json.dumps(response), self.client_address)
+            self.command = request_message['cmd']
+            self.parameter = int(request_message['prm'])
+            self.start_frame = int(request_message['frm'])
+
+
 
 def seed_movie():
     movie_data = {}
@@ -25,7 +30,7 @@ def seed_movie():
 
 if __name__ == "__main__":
     HOST, PORT = "0.0.0.0", 5000
-    server = SocketServer.UDPServer((HOST, PORT), RequestHandler)
+    server = SocketServer.TCPServer((HOST, PORT), RequestHandler)
 
     print "Seeding movie data..."
     server.movie_data = seed_movie()
