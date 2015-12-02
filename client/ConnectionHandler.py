@@ -2,7 +2,7 @@
 
 import json, threading, SocketServer
 
-class DataHandler(SocketServer.StreamRequestHandler):
+class DataHandler(SocketServer.BaseRequestHandler):
 
     def handle(self):
         response_message = self.request[0][1:-1]
@@ -24,7 +24,7 @@ class ConnectionHandler(threading.Thread):
     def __init__(self, hostname, port, server_ips, data_buffer):
         self.port = port
         self.server_ips = server_ips
-        self.server = SocketServer.UDPServer((hostname, port), DataHandler)
+        self.server = SocketServer.TCPServer((hostname, port), DataHandler)
         self.server.data_buffer = data_buffer
         threading.Thread.__init__ (self)
 
