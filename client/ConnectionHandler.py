@@ -149,10 +149,13 @@ class ServerConnection():
                 else:
                     server.fleight_size -= 1
                     frame_num = int(data[:5])
-                    print "frame: {}".format(frame_num)
-                    if server.manager.frame_queue.add_frame(frame_num, data) and server.frame < frame_num:
+                    # print "frame: {}".format(frame_num)
+                    was_added = server.manager.frame_queue.add_frame(frame_num, data)
+                    if was_added and server.frame < frame_num:
                         server.frame = frame_num
-                
+                    else:
+                        server.fleight_size = 0
+                        break;
         finally:
             sock.close()
             

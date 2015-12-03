@@ -9,11 +9,11 @@ def main():
 
     frame_buffer = FrameBuffer(32)
 
-    movie_stream = ServerManager(servers, frame_buffer)
-    movie_stream.start()
-
     movie_thread = MovieWatcher(frame_buffer)
     movie_thread.start()
+
+    movie_stream = ServerManager(servers, frame_buffer)
+    movie_stream.start()
 
 if __name__ == "__main__":
     main()
