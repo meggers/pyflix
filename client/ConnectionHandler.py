@@ -52,7 +52,7 @@ class ServerManager():
         
         if self.cons[server_index].frame < 29999:
             self.cons[server_index].frame = self.highest_frame_requested
-            self.cons[server_index].window = self.generate_window()
+            self.cons[server_index].window = self.generate_window(self.cons[server_index])
             self.highest_frame_requested = self.cons[server_index].frame + self.cons[server_index].window
 
             self.cons[server_index].start()
