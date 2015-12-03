@@ -11,8 +11,9 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 
         if self.command == "Start":
 
-            for offset in range(window):
-                response = self.server.movie_data[start_frame + offset]
+            for offset in range(self.window):
+                response = self.server.movie_data[self.start_frame + offset]
+                print "frame: {} ".format(len(response))
                 self.wfile.write(response)
 
 def seed_movie():
@@ -27,7 +28,7 @@ def seed_movie():
     return movie_data
 
 if __name__ == "__main__":
-    HOST, PORT = "0.0.0.0", 5000
+    HOST, PORT = "0.0.0.0", 5005
     server = SocketServer.TCPServer((HOST, PORT), RequestHandler)
 
     print "Seeding movie data..."
