@@ -21,6 +21,26 @@ class ServerManager():
             server.start()
         
         self.complete_queue.listen(self)
+
+    def generate_window(self, connection):
+        flight_sizes = [ x.flight_sizes for _, x in self.cons.iteritems() ]
+        total_fleight_size = sum(flight_sizes) 
+        buffer_space = self.frame_buffer.free_size()
+        request_amt = buffer_space - total_fleight_size
+
+        if request_amt <= 0:
+            # if we have requested as much as we have room for already
+            # just ask for a little bit, a frame will probably be read!
+            return 1
+        elif request_amt <= connection.window:
+            # if we need less that we would have asked for anyway
+            return request_amt
+        else:
+            # grab delays per packet for each connection and inverse weight proportion
+            delays = [ x.delay / x.window for _, x in self.cons.iteritems() ]
+            weight = sum(delays)/(connection.delay + sum(delays))
+
+            return int( weight * request_amt )
     
     def window_complete(self, id):
         server_index = 0
@@ -31,10 +51,10 @@ class ServerManager():
         print "COMPLETE: "+id+", t = {}".format(self.cons[server_index].delay)
         
         if self.cons[server_index].frame < 29999:
-            # TODO Modify stuff here
             self.cons[server_index].frame = self.highest_frame_requested
-            self.cons[server_index].window = 8
+            self.cons[server_index].window = self.generate_window()
             self.highest_frame_requested = self.cons[server_index].frame + self.cons[server_index].window
+
             self.cons[server_index].start()
         elif self.total_fleight_size() == 0:
             self.complete_queue.close()
