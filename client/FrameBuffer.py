@@ -21,5 +21,8 @@ class FrameBuffer:
         else:
             return None
 
+    def free_size(self):
+        return self.length - self.buffer.qsize()
+
     def ready(self):
         return self.buffer.qsize() >= (self.length / 4)
