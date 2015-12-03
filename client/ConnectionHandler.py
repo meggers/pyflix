@@ -23,10 +23,10 @@ class ServerManager():
         self.complete_queue.listen(self)
 
     def generate_window(self, connection):
-        flight_sizes = [ x.fleight_size for x in self.cons ]
-        total_fleight_size = sum(fleight_sizes) 
-        buffer_space = self.frame_buffer.free_size()
-        request_amt = buffer_space - total_fleight_size
+        flight_sizes = [ x.flight_size for x in self.cons ]
+        total_flight_size = sum(flight_sizes) 
+        buffer_space = self.frame_queue.free_size()
+        request_amt = buffer_space - total_flight_size
 
         if request_amt <= 0:
             # if we have requested as much as we have room for already
@@ -61,13 +61,13 @@ class ServerManager():
             self.highest_frame_requested = self.cons[server_index].frame + self.cons[server_index].window
 
             self.cons[server_index].start()
-        elif self.total_fleight_size() == 0:
+        elif self.total_flight_size() == 0:
             self.complete_queue.close()
             
-    def total_fleight_size(self):
+    def total_flight_size(self):
         fs = 0
         for server in self.cons:
-            fs += server.fleight_size
+            fs += server.flight_size
         return fs
        
     class CompleteQueue():
@@ -100,7 +100,7 @@ class ServerConnection():
         self.window = window
         
         self.frame_size = 2048
-        self.fleight_size = 0
+        self.flight_size = 0
         self.receiving = False
         self.delay = -1
         self.starting_frame = frame
@@ -120,18 +120,18 @@ class ServerConnection():
         request = {"cmd": "Start", "frm": self.frame, "wnd": self.window}
         
         self.tick()
-        self.fleight_size = self.window
+        self.flight_size = self.window
         self.receiving = True
         self.thread = threading.Thread(target=ServerConnection.threaded_send_request, args=(self, request)).start()
     
     def request_complete(self):
         self.delay = self.tock()
         self.receiving = False
-        self.fleight_size = 0
+        self.flight_size = 0
         
         if self.starting_frame + self.window - 1 > self.frame:
             self.window -= self.frame - self.starting_frame
-            self.fleight_size = self.window
+            self.flight_size = self.window
             self.starting_frame = self.frame
             self.start()
         else:
@@ -162,7 +162,7 @@ class ServerConnection():
                 
                 if len(data) >= server.frame_size:
                     
-                    server.fleight_size -= 1
+                    server.flight_size -= 1
                     num_recvd += 1
                     frame_num = int(data[:5])
                     frame = data[:server.frame_size]
@@ -175,10 +175,10 @@ class ServerConnection():
                             server.frame = frame_num
                     else:
                         pass
-                        # server.fleight_size = 0
+                        # server.flight_size = 0
                         # done = True
                         
-                if server.fleight_size == 0:
+                if server.flight_size == 0:
                     done = True
                     
         finally:
