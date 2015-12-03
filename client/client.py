@@ -4,15 +4,8 @@ from FrameBuffer import *
 from MovieWatcher import *
 from ConnectionHandler import *
 
-# UDP static info
-UDP_HOSTNAME = "0.0.0.0"
-UDP_PORT = 5000
-
-# server list
-servers = ["vm1" , "vm2", "vm3", "vm4"]
-
 def main():
-    global UDP_HOSTNAME, UDP_PORT, servers
+    servers = ["vm1" , "vm2", "vm3", "vm4"]
 
     frame_buffer = FrameBuffer(32)
 

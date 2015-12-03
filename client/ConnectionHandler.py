@@ -6,7 +6,11 @@ import threading, time, Queue
 
 class ServerManager():
     def __init__(self, servers, frame_buffer):
+<<<<<<< HEAD
         self.highest_frame_requested = -1
+=======
+        self.highest_frame_requested = float('-inf')
+>>>>>>> 76768adbd710ba4e6d381749fcaaa0ecd7df8d58
         self.servers = servers
         self.frame_buffer = frame_buffer
         self.complete_queue = ServerManager.CompleteQueue()
@@ -33,6 +37,7 @@ class ServerManager():
         elif total_fleight_size() == 0:
             self.complete_queue.close()
         
+<<<<<<< HEAD
             
     def total_fleight_size():
         fs = 0
@@ -62,6 +67,39 @@ class ServerManager():
         
         
 
+=======
+        if self.all_windows_done():
+            self.reconfigure()
+        
+        if self.configs[id]['frm'] > 200:
+            self.frame_queue.close()
+        else:
+            self.cons[id].start(self.configs[id])
+            
+            
+    def all_windows_done(self):
+        for id in xrange(0,4):
+            if self.cons[id].receiving:
+                return False
+        return True
+        
+    def reconfigure(self):
+        delays = [
+            self.cons[0].delay,
+            self.cons[1].delay,
+            self.cons[2].delay,
+            self.cons[3].delay
+        ]
+        
+    def handle_frame(self, id, data):
+        if len(data) == 0:
+            self.window_complete(id)
+        elif data == "ACK":
+            print "Recvd ACK"
+        else:
+            frame_num = int(data[:5])
+            print "Recvd frame: {}, length: {}".format(frame_num, len(data))    
+>>>>>>> 76768adbd710ba4e6d381749fcaaa0ecd7df8d58
         
 
 class ServerConnection():
@@ -126,6 +164,7 @@ class ServerConnection():
         finally:
             sock.close()
             
+<<<<<<< HEAD
         server.request_complete()
 
 
@@ -134,3 +173,7 @@ class ServerConnection():
     
     
     
+=======
+        server.window_received()
+ 
+>>>>>>> 76768adbd710ba4e6d381749fcaaa0ecd7df8d58

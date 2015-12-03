@@ -25,4 +25,4 @@ class FrameBuffer:
         return self.length - self.buffer.qsize()
 
     def ready(self):
-        return self.buffer.qsize() >= (self.length / 4)
+        return self.buffer.qsize() >= (self.length / 2)
