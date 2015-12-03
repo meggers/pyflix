@@ -1,20 +1,26 @@
 import json, SocketServer
 
+# class RequestHandler(SocketServer.BaseRequestHandler):
 class RequestHandler(SocketServer.StreamRequestHandler):
 
     def handle(self):
-        request_message = json.loads( self.rfile.readline().rstrip() )
+        
+        while 1:
+            self.data = self.request.recv(1024)
+            if not self.data:
+                break
+            self.data = self.data.strip()
+            request_message = json.loads( self.data.strip() )
 
-        self.command = request_message['cmd']
-        self.window = int(request_message['wnd'])
-        self.start_frame = int(request_message['frm'])
+            self.command = request_message['cmd']
+            self.window = int(request_message['wnd'])
+            self.start_frame = int(request_message['frm'])
 
-        if self.command == "Start":
+            if self.command == "Start":
 
-            for offset in range(self.window):
-                response = self.server.movie_data[self.start_frame + offset]
-                print "frame: {} ".format(len(response))
-                self.wfile.write(response)
+                for offset in range(self.window):
+                    response = self.server.movie_data[self.start_frame + offset]
+                    self.request.send(response)
 
 def seed_movie():
     movie_data = {}
