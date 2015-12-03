@@ -23,7 +23,7 @@ class ServerManager():
         self.complete_queue.listen(self)
 
     def generate_window(self, connection):
-        flight_sizes = [ x.flight_sizes for _, x in self.cons.iteritems() ]
+        flight_sizes = [ x.flight_sizes for x in self.cons ]
         total_fleight_size = sum(flight_sizes) 
         buffer_space = self.frame_buffer.free_size()
         request_amt = buffer_space - total_fleight_size
@@ -37,7 +37,7 @@ class ServerManager():
             return request_amt
         else:
             # grab delays per packet for each connection and inverse weight proportion
-            delays = [ x.delay / x.window for _, x in self.cons.iteritems() ]
+            delays = [ x.delay / x.window for x in self.cons ]
             weight = sum(delays)/(connection.delay + sum(delays))
 
             # calculate window size as percentage of free space
@@ -88,7 +88,6 @@ class ServerManager():
                 id = self.get()
                 handler.window_complete(id)
         
-
 class ServerConnection():
     
     def __init__(self, manager, host, port, frame, window = 8):
