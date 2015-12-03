@@ -23,8 +23,8 @@ class ServerManager():
         self.complete_queue.listen(self)
 
     def generate_window(self, connection):
-        flight_sizes = [ x.flight_sizes for x in self.cons ]
-        total_fleight_size = sum(flight_sizes) 
+        flight_sizes = [ x.fleight_size for x in self.cons ]
+        total_fleight_size = sum(fleight_sizes) 
         buffer_space = self.frame_buffer.free_size()
         request_amt = buffer_space - total_fleight_size
 
