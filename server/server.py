@@ -6,7 +6,7 @@ class RequestHandler(SocketServer.StreamRequestHandler):
         request_message = json.loads( self.rfile.readline().rstrip() )
 
         self.command = request_message['cmd']
-        self.window = int(request_message['prm'])
+        self.window = int(request_message['wnd'])
         self.start_frame = int(request_message['frm'])
 
         if self.command == "Start":
