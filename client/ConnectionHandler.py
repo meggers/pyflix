@@ -53,6 +53,8 @@ class ServerManager():
             if server.host == id:
                 server_index = index
         
+        # print "COMPLETE: "+id+", t = {}".format(self.cons[server_index].delay)
+        
         if self.cons[server_index].frame < 29999:
             self.cons[server_index].frame = self.highest_frame_requested
             self.cons[server_index].window = self.generate_window(self.cons[server_index])
@@ -101,6 +103,12 @@ class ServerConnection():
         self.fleight_size = 0
         self.receiving = False
         self.delay = -1
+        self.starting_frame = frame
+        
+        # Create a socket (SOCK_STREAM means a TCP socket)
+        self.sock = socket(AF_INET, SOCK_STREAM)
+        # Connect to server
+        self.sock.connect((self.host, self.port))
         
     def tick(self):
         self.tick_time = time.time()
@@ -120,42 +128,60 @@ class ServerConnection():
         self.delay = self.tock()
         self.receiving = False
         self.fleight_size = 0
-        self.manager.complete_queue.put(self.host)
+        
+        if self.starting_frame + self.window - 1 > self.frame:
+            self.window -= self.frame - self.starting_frame
+            self.fleight_size = self.window
+            self.starting_frame = self.frame
+            self.start()
+        else:
+            self.manager.complete_queue.put(self.host)
     
     @staticmethod
     def threaded_send_request(server, request):
         
-        # Create a socket (SOCK_STREAM means a TCP socket)
-        sock = socket(AF_INET, SOCK_STREAM)
-        # Connect to server
-        sock.connect((server.host, server.port))
+        num_recvd = 0
         
         # Send data
-        sock.sendall(json.dumps(request)+"\n")
+        server.sock.sendall(json.dumps(request)+"\n")
+        # sock.sendto(json.dumps(request)+"\n", (server.host, server.port))
         try:
             done = False
+            data = ""
+            frames = ""
+            server.starting_frame = server.frame
             while not done:
                 # Receive data from the server
-                data = sock.recv(server.frame_size)
+                server.frame_size = 1018
+                data += server.sock.recv(server.frame_size)
                 # if the frame_size == 2048 then its the first frame, adjust this to fit the following frame
                 if server.frame_size == 2048:
                     server.frame_size = len(data)
                     
-                data = data + ""
+                # print "frame {}".format(data)
                 
-                if len(data) == 0:
-                    done = True
-                else:
+                if len(data) >= server.frame_size:
+                    
                     server.fleight_size -= 1
+                    num_recvd += 1
                     frame_num = int(data[:5])
+                    frame = data[:server.frame_size]
+                    data = data[server.frame_size:]
                     # print "frame: {}".format(frame_num)
-                    was_added = server.manager.frame_queue.add_frame(frame_num, data)
-                    if was_added and server.frame < frame_num:
-                        server.frame = frame_num
+                    
+                    was_added = server.manager.frame_queue.add_frame(frame_num, frame)
+                    if was_added:
+                        if server.frame < frame_num:
+                            server.frame = frame_num
                     else:
-                        server.fleight_size = 0
-                        break;
+                        pass
+                        # server.fleight_size = 0
+                        # done = True
+                        
+                if server.fleight_size == 0:
+                    done = True
+                    
         finally:
-            sock.close()
+            pass
             
         server.request_complete()
