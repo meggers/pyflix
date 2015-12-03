@@ -2,13 +2,13 @@
 
 from socket import *
 from sys import *
-import threading, time, Queue
+import threading, time, Queue, json
 
 class ServerManager():
     def __init__(self, servers, frame_buffer):
         self.highest_frame_requested = -1
         self.servers = servers
-        self.frame_buffer = frame_buffer
+        self.frame_queue = frame_buffer
         self.complete_queue = ServerManager.CompleteQueue()
         
     def start(self):
@@ -23,19 +23,23 @@ class ServerManager():
         self.complete_queue.listen(self)
     
     def window_complete(self, id):
-        print "COMPLETE: {}, t = {}".format(id, self.cons[id].delay)
+        server_index = 0
+        for index, server in enumerate(self.cons):
+            if server.host == id:
+                server_index = index
         
-        if self.cons[id].frame < 29999:
+        print "COMPLETE: "+id+", t = {}".format(self.cons[server_index].delay)
+        
+        if self.cons[server_index].frame < 29999:
             # TODO Modify stuff here
-            self.cons[id].frame = self.highest_frame_requested + total_fleight_size()
-            self.cons[id].window = 8
-            self.highest_frame_requested += self.cons[id].frame + self.cons[id].window
-            self.cons[id].start()
-            
-        elif total_fleight_size() == 0:
+            self.cons[server_index].frame = self.highest_frame_requested + self.total_fleight_size()
+            self.cons[server_index].window = 8
+            self.highest_frame_requested += self.cons[server_index].frame + self.cons[server_index].frame
+            self.cons[server_index].start()
+        elif self.total_fleight_size() == 0:
             self.complete_queue.close()
             
-    def total_fleight_size():
+    def total_fleight_size(self):
         fs = 0
         for server in self.cons:
             fs += server.fleight_size
@@ -82,7 +86,6 @@ class ServerConnection():
         return time.time() - self.tick_time
         
     def start(self):
-        
         request = {"cmd": "Start", "frm": self.frame, "wnd": self.window}
         
         self.tick()
@@ -94,7 +97,7 @@ class ServerConnection():
         self.delay = self.tock()
         self.receiving = False
         self.fleight_size = 0
-        self.manager.complete_queue.put(self.ip)
+        self.manager.complete_queue.put(self.host)
     
     @staticmethod
     def threaded_send_request(server, request):
@@ -111,15 +114,17 @@ class ServerConnection():
             while not done:
                 # Receive data from the server
                 data = sock.recv(1030)
+                data = data + ""
+                print "length: {}".format(len(data))
                 
                 if len(data) == 0:
                     done = True
                 else:
                     server.fleight_size -= 1
-                
-                frame_num = int(data[:5])
-                if server.manager.frame_queue.add_frame(frame_num, data) and server.frame < frame_num:
-                    server.frame = frame_num
+                    frame_num = int(data[:5])
+                    print "frame: {}".format(frame_num)
+                    if server.manager.frame_queue.add_frame(frame_num, data) and server.frame < frame_num:
+                        server.frame = frame_num
                 
         finally:
             sock.close()
