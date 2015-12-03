@@ -32,9 +32,9 @@ class ServerManager():
         
         if self.cons[server_index].frame < 29999:
             # TODO Modify stuff here
-            self.cons[server_index].frame = self.highest_frame_requested + self.total_fleight_size()
+            self.cons[server_index].frame = self.highest_frame_requested
             self.cons[server_index].window = 8
-            self.highest_frame_requested += self.cons[server_index].frame + self.cons[server_index].frame
+            self.highest_frame_requested = self.cons[server_index].frame + self.cons[server_index].window
             self.cons[server_index].start()
         elif self.total_fleight_size() == 0:
             self.complete_queue.close()
@@ -75,6 +75,7 @@ class ServerConnection():
         self.frame = frame
         self.window = window
         
+        self.frame_size = 2048
         self.fleight_size = 0
         self.receiving = False
         self.delay = -1
@@ -113,9 +114,12 @@ class ServerConnection():
             done = False
             while not done:
                 # Receive data from the server
-                data = sock.recv(1030)
+                data = sock.recv(server.frame_size)
+                # if the frame_size == 2048 then its the first frame, adjust this to fit the following frame
+                if server.frame_size == 2048:
+                    server.frame_size = len(data)
+                    
                 data = data + ""
-                print "length: {}".format(len(data))
                 
                 if len(data) == 0:
                     done = True
