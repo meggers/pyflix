@@ -33,22 +33,25 @@ class ServerManager():
             # just ask for a little bit, a frame will probably be read!
             return 1
         elif request_amt <= connection.window:
-            # if we need less that we would have asked for anyway
+            # if we need less than we asked for last time
             return request_amt
         else:
             # grab delays per packet for each connection and inverse weight proportion
             delays = [ x.delay / x.window for _, x in self.cons.iteritems() ]
             weight = sum(delays)/(connection.delay + sum(delays))
 
-            return int( weight * request_amt )
+            # calculate window size as percentage of free space
+            window = int(weight * request_amt)
+
+            # return window if window is greater than 1, else 1
+            # this is to ensure we still have delay data for connection
+            return max(1, window)
     
     def window_complete(self, id):
         server_index = 0
         for index, server in enumerate(self.cons):
             if server.host == id:
                 server_index = index
-        
-        print "COMPLETE: "+id+", t = {}".format(self.cons[server_index].delay)
         
         if self.cons[server_index].frame < 29999:
             self.cons[server_index].frame = self.highest_frame_requested
