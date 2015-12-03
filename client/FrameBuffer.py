@@ -9,10 +9,11 @@ class FrameBuffer:
         self.buffer = Queue.PriorityQueue(self.length)
 
     def add_frame(self, frame_number, frame):
-        if not self.buffer.full():
-            self.buffer.put((frame_number, frame))
+        
+        try:
+            self.buffer.put_nowait((frame_number, frame))
             return True
-        else:
+        except Queue.Full, e:
             return False
 
     def get_frame(self):
