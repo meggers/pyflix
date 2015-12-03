@@ -3,7 +3,7 @@
 import os, binascii
 
 csv_file = "server/movie_data.txt"
-frame_size = 1029
+frame_size = 506
 num_frames = 30000
 
 target = open(csv_file, 'wb')
