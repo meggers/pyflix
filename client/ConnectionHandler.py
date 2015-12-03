@@ -6,7 +6,7 @@ import threading, time
 
 class ServerManager():
     def __init__(self, servers, frame_buffer):
-        self.current_frame = -1
+        self.highest_frame_requested = float('-inf')
         self.servers = servers
         self.frame_buffer = frame_buffer
         
@@ -48,9 +48,6 @@ class ServerManager():
             self.cons[3].delay
         ]
         
-        
-        
-        
     def handle_frame(self, id, data):
         if len(data) == 0:
             self.window_complete(id)
@@ -58,30 +55,7 @@ class ServerManager():
             print "Recvd ACK"
         else:
             frame_num = int(data[:5])
-            print "Recvd frame: {}, length: {}".format(frame_num, len(data))
-            
-            
-    # class FrameQueue():
-    
-    #     def __init__(self):
-    #         self.q = Queue.Queue()
-            
-    #     def put(self, id, data):
-    #         self.q.put((id, data))
-            
-    #     def get(self):
-    #         return self.q.get()
-            
-    #     def close(self):
-    #         self.done = True
-            
-    #     def listen(self):
-    #         self.done = False
-    #         while not self.done:
-    #             id, data = self.get()
-    #             servers.handle_frame(id, data)
-                
-
+            print "Recvd frame: {}, length: {}".format(frame_num, len(data))    
         
 class ServerConnection():
     
@@ -137,10 +111,4 @@ class ServerConnection():
             sock.close()
             
         server.window_received()
-
-
-    
-    
-    
-    
-    
+ 
