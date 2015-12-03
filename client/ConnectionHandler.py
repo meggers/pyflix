@@ -4,7 +4,6 @@ from socket import *
 from sys import *
 import threading, time
 
-
 class ServerManager():
     def __init__(self, servers, frame_buffer):
         self.current_frame = -1
@@ -138,6 +137,7 @@ class ServerConnection():
             sock.close()
             
         server.window_received()
+
 
     
     
