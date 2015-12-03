@@ -90,7 +90,6 @@ class ServerManager():
                 id = self.get()
                 handler.window_complete(id)
         
-
 class ServerConnection():
     
     def __init__(self, manager, host, port, frame, window = 8):
