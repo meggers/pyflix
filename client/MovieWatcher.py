@@ -39,7 +39,7 @@ class MovieWatcher(threading.Thread):
             time.sleep(0.01)
 
         print "Dumping data..."
-        target = open('timing_dump', 'w')
+        target = open('timing_dump.csv', 'w')
         target.truncate()
 
         for index, time in enumerate(self.times):
