@@ -45,6 +45,7 @@ class ServerManager():
 
             # return window if window is greater than 1, else 1
             # this is to ensure we still have delay data for connection
+            print "Window: {}".format(max(1, window))
             return max(1, window)
     
     def window_complete(self, id):
@@ -152,13 +153,15 @@ class ServerConnection():
             server.starting_frame = server.frame
             while not done:
                 # Receive data from the server
-                server.frame_size = 1018
+                server.frame_size = 1024
                 data += server.sock.recv(server.frame_size)
                 # if the frame_size == 2048 then its the first frame, adjust this to fit the following frame
-                if server.frame_size == 2048:
-                    server.frame_size = len(data)
+                # if server.frame_size == 2048:
+                #     server.frame_size = len(data)
                     
                 # print "frame {}".format(data)
+                
+                print "len(data) = {}".format(len(data))
                 
                 if len(data) >= server.frame_size:
                     

@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<rspec xmlns="http://www.geni.net/resources/rspec/3" xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" xmlns:tour="http://www.protogeni.net/resources/rspec/ext/apt-tour/1" xmlns:jacks="http://www.protogeni.net/resources/rspec/ext/jacks/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.geni.net/resources/rspec/3    http://www.geni.net/resources/rspec/3/manifest.xsd" type="manifest" expires="2015-12-10T23:45:12Z">
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="VM1" component_manager_id="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+node+pc2" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14497" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="https://www.instageni.illinois.edu/image_metadata.php?uuid=03c883b6-53f9-11e4-9608-000000000000"/>
+    </sliver_type>
+    <services>
+      <execute command="sudo sh /gimidev/gimibot.sh" shell="/bin/sh"/>
+      <install url="http://www.ece.wisc.edu/~parmesh/gimidev.tar.gz" install_path="/"/>
+      <login authentication="ssh-keys" hostname="pcvm2-8.instageni.idre.ucla.edu" port="22" username="parmesh"/>
+      <login authentication="ssh-keys" hostname="pcvm2-8.instageni.idre.ucla.edu" port="22" username="aprakash"/>
+      <login authentication="ssh-keys" hostname="pcvm2-8.instageni.idre.ucla.edu" port="22" username="mkellihe"/>
+      <login authentication="ssh-keys" hostname="pcvm2-8.instageni.idre.ucla.edu" port="22" username="sdbajwa"/>
+      <emulab:console server="pcvm2-8.instageni.idre.ucla.edu"/>
+    </services>
+    <interface client_id="interface-4" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14507" mac_address="02886eeb8e60">
+      <ip address="10.10.1.1" type="ipv4"/>
+    </interface>
+    <emulab:vnode name="pcvm2-8" hardware_type="pcvm"/>
+    <host name="VM1.Nuggets.ch-geni-net.instageni.idre.ucla.edu"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="VM2" component_manager_id="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+node+pc2" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14498" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="https://www.instageni.illinois.edu/image_metadata.php?uuid=03c883b6-53f9-11e4-9608-000000000000"/>
+    </sliver_type>
+    <services>
+      <execute command="sudo sh /gimidev/gimibot.sh" shell="/bin/sh"/>
+      <install url="http://www.ece.wisc.edu/~parmesh/gimidev.tar.gz" install_path="/"/>
+      <login authentication="ssh-keys" hostname="pcvm2-9.instageni.idre.ucla.edu" port="22" username="parmesh"/>
+      <login authentication="ssh-keys" hostname="pcvm2-9.instageni.idre.ucla.edu" port="22" username="aprakash"/>
+      <login authentication="ssh-keys" hostname="pcvm2-9.instageni.idre.ucla.edu" port="22" username="mkellihe"/>
+      <login authentication="ssh-keys" hostname="pcvm2-9.instageni.idre.ucla.edu" port="22" username="sdbajwa"/>
+      <emulab:console server="pcvm2-9.instageni.idre.ucla.edu"/>
+    </services>
+    <interface client_id="interface-6" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14510" mac_address="02cf960e0a97">
+      <ip address="10.10.2.1" type="ipv4"/>
+    </interface>
+    <emulab:vnode name="pcvm2-9" hardware_type="pcvm"/>
+    <host name="VM2.Nuggets.ch-geni-net.instageni.idre.ucla.edu"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="VM3" component_manager_id="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+node+pc2" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14499" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="https://www.instageni.illinois.edu/image_metadata.php?uuid=03c883b6-53f9-11e4-9608-000000000000"/>
+    </sliver_type>
+    <services>
+      <execute command="sudo sh /gimidev/gimibot.sh" shell="/bin/sh"/>
+      <install url="http://www.ece.wisc.edu/~parmesh/gimidev.tar.gz" install_path="/"/>
+      <login authentication="ssh-keys" hostname="pcvm2-12.instageni.idre.ucla.edu" port="22" username="parmesh"/>
+      <login authentication="ssh-keys" hostname="pcvm2-12.instageni.idre.ucla.edu" port="22" username="aprakash"/>
+      <login authentication="ssh-keys" hostname="pcvm2-12.instageni.idre.ucla.edu" port="22" username="mkellihe"/>
+      <login authentication="ssh-keys" hostname="pcvm2-12.instageni.idre.ucla.edu" port="22" username="sdbajwa"/>
+      <emulab:console server="pcvm2-12.instageni.idre.ucla.edu"/>
+    </services>
+    <interface client_id="interface-8" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14513" mac_address="02a789b3f4c2">
+      <ip address="10.10.3.1" type="ipv4"/>
+    </interface>
+    <emulab:vnode name="pcvm2-12" hardware_type="pcvm"/>
+    <host name="VM3.Nuggets.ch-geni-net.instageni.idre.ucla.edu"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="VM4" component_manager_id="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+node+pc2" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14500" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="https://www.instageni.illinois.edu/image_metadata.php?uuid=03c883b6-53f9-11e4-9608-000000000000"/>
+    </sliver_type>
+    <services>
+      <execute command="sudo sh /gimidev/gimibot.sh" shell="/bin/sh"/>
+      <install url="http://www.ece.wisc.edu/~parmesh/gimidev.tar.gz" install_path="/"/>
+      <login authentication="ssh-keys" hostname="pcvm2-16.instageni.idre.ucla.edu" port="22" username="parmesh"/>
+      <login authentication="ssh-keys" hostname="pcvm2-16.instageni.idre.ucla.edu" port="22" username="aprakash"/>
+      <login authentication="ssh-keys" hostname="pcvm2-16.instageni.idre.ucla.edu" port="22" username="mkellihe"/>
+      <login authentication="ssh-keys" hostname="pcvm2-16.instageni.idre.ucla.edu" port="22" username="sdbajwa"/>
+      <emulab:console server="pcvm2-16.instageni.idre.ucla.edu"/>
+    </services>
+    <interface client_id="interface-10" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14516" mac_address="027c9e3763fa">
+      <ip address="10.10.4.1" type="ipv4"/>
+    </interface>
+    <emulab:vnode name="pcvm2-16" hardware_type="pcvm"/>
+    <host name="VM4.Nuggets.ch-geni-net.instageni.idre.ucla.edu"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="VM5" component_manager_id="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+node+pc2" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14501" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="https://www.instageni.illinois.edu/image_metadata.php?uuid=03c883b6-53f9-11e4-9608-000000000000"/>
+    </sliver_type>
+    <services>
+      <execute command="sudo sh /gimidev/gimibot.sh" shell="/bin/sh"/>
+      <install url="http://www.ece.wisc.edu/~parmesh/gimidev.tar.gz" install_path="/"/>
+      <login authentication="ssh-keys" hostname="pcvm2-17.instageni.idre.ucla.edu" port="22" username="parmesh"/>
+      <login authentication="ssh-keys" hostname="pcvm2-17.instageni.idre.ucla.edu" port="22" username="aprakash"/>
+      <login authentication="ssh-keys" hostname="pcvm2-17.instageni.idre.ucla.edu" port="22" username="mkellihe"/>
+      <login authentication="ssh-keys" hostname="pcvm2-17.instageni.idre.ucla.edu" port="22" username="sdbajwa"/>
+      <emulab:console server="pcvm2-17.instageni.idre.ucla.edu"/>
+    </services>
+    <interface client_id="interface-5" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14508" mac_address="022d6164f59a">
+      <ip address="10.10.1.2" type="ipv4"/>
+    </interface>
+    <interface client_id="interface-7" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14511" mac_address="02101f24e856">
+      <ip address="10.10.2.2" type="ipv4"/>
+    </interface>
+    <interface client_id="interface-12" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14519" mac_address="020ad814c2fc">
+      <ip address="10.10.5.1" type="ipv4"/>
+    </interface>
+    <emulab:vnode name="pcvm2-17" hardware_type="pcvm"/>
+    <host name="VM5.Nuggets.ch-geni-net.instageni.idre.ucla.edu"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="VM6" component_manager_id="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+node+pc2" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14502" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="https://www.instageni.illinois.edu/image_metadata.php?uuid=03c883b6-53f9-11e4-9608-000000000000"/>
+    </sliver_type>
+    <services>
+      <execute command="sudo sh /gimidev/gimibot.sh" shell="/bin/sh"/>
+      <install url="http://www.ece.wisc.edu/~parmesh/gimidev.tar.gz" install_path="/"/>
+      <login authentication="ssh-keys" hostname="pcvm2-18.instageni.idre.ucla.edu" port="22" username="parmesh"/>
+      <login authentication="ssh-keys" hostname="pcvm2-18.instageni.idre.ucla.edu" port="22" username="aprakash"/>
+      <login authentication="ssh-keys" hostname="pcvm2-18.instageni.idre.ucla.edu" port="22" username="mkellihe"/>
+      <login authentication="ssh-keys" hostname="pcvm2-18.instageni.idre.ucla.edu" port="22" username="sdbajwa"/>
+      <emulab:console server="pcvm2-18.instageni.idre.ucla.edu"/>
+    </services>
+    <interface client_id="interface-9" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14514" mac_address="022eb9839cbd">
+      <ip address="10.10.3.2" type="ipv4"/>
+    </interface>
+    <interface client_id="interface-11" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14517" mac_address="023d685e0178">
+      <ip address="10.10.4.2" type="ipv4"/>
+    </interface>
+    <interface client_id="interface-14" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14522" mac_address="02629ff3c8e4">
+      <ip address="10.10.6.1" type="ipv4"/>
+    </interface>
+    <emulab:vnode name="pcvm2-18" hardware_type="pcvm"/>
+    <host name="VM6.Nuggets.ch-geni-net.instageni.idre.ucla.edu"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="VM7" component_manager_id="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+node+pc2" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14503" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="https://www.instageni.illinois.edu/image_metadata.php?uuid=03c883b6-53f9-11e4-9608-000000000000"/>
+    </sliver_type>
+    <services>
+      <execute command="sudo sh /gimidev/gimibot.sh" shell="/bin/sh"/>
+      <install url="http://www.ece.wisc.edu/~parmesh/gimidev.tar.gz" install_path="/"/>
+      <login authentication="ssh-keys" hostname="pcvm2-19.instageni.idre.ucla.edu" port="22" username="parmesh"/>
+      <login authentication="ssh-keys" hostname="pcvm2-19.instageni.idre.ucla.edu" port="22" username="aprakash"/>
+      <login authentication="ssh-keys" hostname="pcvm2-19.instageni.idre.ucla.edu" port="22" username="mkellihe"/>
+      <login authentication="ssh-keys" hostname="pcvm2-19.instageni.idre.ucla.edu" port="22" username="sdbajwa"/>
+      <emulab:console server="pcvm2-19.instageni.idre.ucla.edu"/>
+    </services>
+    <interface client_id="interface-13" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14520" mac_address="02181562c501">
+      <ip address="10.10.5.2" type="ipv4"/>
+    </interface>
+    <interface client_id="interface-15" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14523" mac_address="02cbc56d8c10">
+      <ip address="10.10.6.2" type="ipv4"/>
+    </interface>
+    <interface client_id="interface-16" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14525" mac_address="0282d0d5e194">
+      <ip address="10.10.7.1" type="ipv4"/>
+    </interface>
+    <emulab:vnode name="pcvm2-19" hardware_type="pcvm"/>
+    <host name="VM7.Nuggets.ch-geni-net.instageni.idre.ucla.edu"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="VM8" component_manager_id="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+node+pc2" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14504" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="https://www.instageni.illinois.edu/image_metadata.php?uuid=03c883b6-53f9-11e4-9608-000000000000"/>
+    </sliver_type>
+    <services>
+      <execute command="sudo sh /gimidev/gimibot.sh" shell="/bin/sh"/>
+      <install url="http://www.ece.wisc.edu/~parmesh/gimidev.tar.gz" install_path="/"/>
+      <login authentication="ssh-keys" hostname="pcvm2-23.instageni.idre.ucla.edu" port="22" username="parmesh"/>
+      <login authentication="ssh-keys" hostname="pcvm2-23.instageni.idre.ucla.edu" port="22" username="aprakash"/>
+      <login authentication="ssh-keys" hostname="pcvm2-23.instageni.idre.ucla.edu" port="22" username="mkellihe"/>
+      <login authentication="ssh-keys" hostname="pcvm2-23.instageni.idre.ucla.edu" port="22" username="sdbajwa"/>
+      <emulab:console server="pcvm2-23.instageni.idre.ucla.edu"/>
+    </services>
+    <interface client_id="interface-17" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14526" mac_address="0267c00d5799">
+      <ip address="10.10.7.2" type="ipv4"/>
+    </interface>
+    <emulab:vnode name="pcvm2-23" hardware_type="pcvm"/>
+    <host name="VM8.Nuggets.ch-geni-net.instageni.idre.ucla.edu"/>
+  </node>
+  <link client_id="link-1" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14506">
+    <interface_ref client_id="interface-4" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14507"/>
+    <interface_ref client_id="interface-5" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14508"/>
+    <component_manager name="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm"/>
+    <property source_id="interface-4" dest_id="interface-5" capacity="256"/>
+    <property source_id="interface-5" dest_id="interface-4" capacity="256"/>
+  </link>
+  <link client_id="link-3" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14509">
+    <interface_ref client_id="interface-6" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14510"/>
+    <interface_ref client_id="interface-7" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14511"/>
+    <component_manager name="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm"/>
+    <property source_id="interface-6" dest_id="interface-7" capacity="256"/>
+    <property source_id="interface-7" dest_id="interface-6" capacity="256"/>
+  </link>
+  <link client_id="link-4" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14512">
+    <interface_ref client_id="interface-8" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14513"/>
+    <interface_ref client_id="interface-9" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14514"/>
+    <component_manager name="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm"/>
+    <property source_id="interface-8" dest_id="interface-9" capacity="256"/>
+    <property source_id="interface-9" dest_id="interface-8" capacity="256"/>
+  </link>
+  <link client_id="link-5" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14515">
+    <interface_ref client_id="interface-10" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14516"/>
+    <interface_ref client_id="interface-11" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14517"/>
+    <component_manager name="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm"/>
+    <property source_id="interface-10" dest_id="interface-11" capacity="256"/>
+    <property source_id="interface-11" dest_id="interface-10" capacity="256"/>
+  </link>
+  <link client_id="link-6" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14518">
+    <interface_ref client_id="interface-12" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14519"/>
+    <interface_ref client_id="interface-13" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14520"/>
+    <component_manager name="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm"/>
+    <property source_id="interface-12" dest_id="interface-13" capacity="512"/>
+    <property source_id="interface-13" dest_id="interface-12" capacity="512"/>
+  </link>
+  <link client_id="link-7" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14521">
+    <interface_ref client_id="interface-14" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14522"/>
+    <interface_ref client_id="interface-15" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14523"/>
+    <component_manager name="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm"/>
+    <property source_id="interface-14" dest_id="interface-15" capacity="512"/>
+    <property source_id="interface-15" dest_id="interface-14" capacity="512"/>
+  </link>
+  <link client_id="link-8" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14524">
+    <interface_ref client_id="interface-16" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14525"/>
+    <interface_ref client_id="interface-17" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+interface+pc2:lo0" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+14526"/>
+    <component_manager name="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm"/>
+    <property source_id="interface-16" dest_id="interface-17" capacity="1024"/>
+    <property source_id="interface-17" dest_id="interface-16" capacity="1024"/>
+  </link>
+  <rs:site_info xmlns:rs="http://www.protogeni.net/resources/rspec/ext/site-info/1">
+    <rs:location country="US" latitude="33.77846" longitude="-84.39888"/>
+  </rs:site_info>
+  <rs:site_info xmlns:rs="http://www.protogeni.net/resources/rspec/ext/site-info/1">
+    <rs:location country="US" latitude="33.77846" longitude="-84.39888"/>
+  </rs:site_info>
+  <rs:site_info xmlns:rs="http://www.protogeni.net/resources/rspec/ext/site-info/1">
+    <rs:location country="US" latitude="34.069444" longitude="-118.443056"/>
+  </rs:site_info>
+</rspec>

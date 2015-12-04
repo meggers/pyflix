@@ -11,8 +11,8 @@ class FrameBuffer:
 
     def add_frame(self, frame_number, frame):
         try:
-            if not self.num_buffer.empty() and self.num_buffer.queue[0] + self.length < frame_number:
-                return False
+            # if not self.num_buffer.empty() and self.num_buffer.queue[0] + self.length < frame_number:
+            #     return False
             
             self.buffer.put_nowait((frame_number, frame))
             self.num_buffer.put_nowait(frame_number)
