@@ -162,8 +162,6 @@ class ServerConnection():
                     
                 # print "frame {}".format(data)
                 
-                print "len(data) = {}".format(len(data))
-                
                 if len(data) >= server.frame_size:
                     
                     server.flight_size -= 1
