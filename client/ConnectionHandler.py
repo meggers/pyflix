@@ -16,7 +16,7 @@ class ServerManager():
         start_window = 8
         
         self.cons = [ServerConnection(self, ip, port, i * start_window) for i, ip in enumerate(self.servers)]
-        self.highest_frame_requested = (4 * start_window) - 1
+        self.highest_frame_requested = (len(self.servers) * start_window) - 1
         
         for server in self.cons:
             server.start()
@@ -24,6 +24,8 @@ class ServerManager():
         self.complete_queue.listen(self)
 
     def generate_window(self, connection):
+        return 100
+        
         flight_sizes = [ x.flight_size for x in self.cons ]
         total_flight_size = sum(flight_sizes) 
         buffer_space = self.frame_queue.free_size()
@@ -32,9 +34,11 @@ class ServerManager():
         if request_amt <= 0:
             # if we have requested as much as we have room for already
             # just ask for a little bit, a frame will probably be read!
+            print "Window1: {}".format(1)
             return 1
         elif request_amt <= connection.window:
             # if we need less than we asked for last time
+            print "Window2: {}".format(request_amt)
             return request_amt
         else:
             # grab delays per packet for each connection and inverse weight proportion
@@ -46,7 +50,7 @@ class ServerManager():
 
             # return window if window is greater than 1, else 1
             # this is to ensure we still have delay data for connection
-            print "Window: {}".format(max(1, window))
+            print "Window3: {}".format(max(1, window))
             return max(1, window)
     
     def window_complete(self, id):
@@ -101,7 +105,7 @@ class ServerConnection():
         self.frame = frame
         self.window = window
         
-        self.frame_size = 2048
+        self.frame_size = 1024
         self.flight_size = 0
         self.receiving = False
         self.delay = -1
@@ -129,58 +133,42 @@ class ServerConnection():
     def request_complete(self):
         self.delay = self.tock()
         self.receiving = False
-        self.flight_size = 0
         
-        if self.starting_frame + self.window - 1 > self.frame:
-            self.window -= self.frame - self.starting_frame
-            self.flight_size = self.window
-            self.starting_frame = self.frame
-            self.start()
-        else:
-            self.manager.complete_queue.put(self.host)
+        self.flight_size = 0
+        self.manager.complete_queue.put(self.host)
     
     @staticmethod
     def threaded_send_request(server, request):
         
         num_recvd = 0
         
-        # Send data
+        # Send request
         server.sock.sendall(json.dumps(request)+"\n")
-        # sock.sendto(json.dumps(request)+"\n", (server.host, server.port))
+        
         try:
             done = False
             data = ""
             frames = ""
             server.starting_frame = server.frame
+            num_frames_needed = server.flight_size
             while not done:
                 # Receive data from the server
-                server.frame_size = 1024
                 data += server.sock.recv(server.frame_size)
-                # if the frame_size == 2048 then its the first frame, adjust this to fit the following frame
-                # if server.frame_size == 2048:
-                #     server.frame_size = len(data)
-                    
-                # print "frame {}".format(data)
                 
                 if len(data) >= server.frame_size:
                     
-                    server.flight_size -= 1
-                    num_recvd += 1
                     frame_num = int(data[:5])
                     frame = data[:server.frame_size]
                     data = data[server.frame_size:]
-                    # print "frame: {}".format(frame_num)
                     
-                    was_added = server.manager.frame_queue.add_frame(frame_num, frame)
-                    if was_added:
+                    if server.manager.frame_queue.add_frame(frame_num, frame):
                         if server.frame < frame_num:
                             server.frame = frame_num
-                    else:
-                        pass
-                        # server.flight_size = 0
-                        # done = True
                         
-                if server.flight_size == 0:
+                    num_frames_needed -= 1
+                        
+                # If we've gotten all of the frames for this window
+                if num_frames_needed == 0:
                     done = True
                     
         finally:
