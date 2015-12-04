@@ -18,7 +18,7 @@ class FrameBuffer:
 
     def get_frame(self, frame_number):
         return_frame = self.peek()
-        if return_frame is not None and return_frame[0] is not frame_number:
+        if return_frame is not None and return_frame[0] != frame_number:
             return None
         
         try:
