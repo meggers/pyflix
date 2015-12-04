@@ -24,10 +24,11 @@ class ServerManager():
         self.complete_queue.listen(self)
 
     def generate_window(self, connection):
-        # maximum possible window size if delay of connection was 0
+        # maximum possible window size if delay of connection is approaching 0
+        # relative to other delays
         max_window = 125
 
-        # delays of each connection
+        # delays of each connection per frame
         delays = [ x.delay / x.window for x in self.cons ]
 
         # weight of this connections delay in comparison with total delay
@@ -82,6 +83,8 @@ class ServerManager():
                 handler.window_complete(id)
         
 class ServerConnection():
+
+    current_milli_time = staticmethod(lambda: int(round(time.time() * 1000)))
     
     def __init__(self, manager, host, port, frame, window = 8):
         self.manager = manager
@@ -93,7 +96,7 @@ class ServerConnection():
         self.frame_size = 1024
         self.flight_size = 0
         self.receiving = False
-        self.delay = -1
+        self.delay = 1500 # in ms
         self.starting_frame = frame
         
         # Create a socket (SOCK_STREAM means a TCP socket)
@@ -102,10 +105,10 @@ class ServerConnection():
         self.sock.connect((self.host, self.port))
         
     def tick(self):
-        self.tick_time = time.time()
+        self.tick_time = self.current_milli_time()
         
     def tock(self):
-        return time.time() - self.tick_time
+        return self.current_milli_time() - self.tick_time
         
     def start(self):
         request = {"cmd": "Start", "frm": self.frame, "wnd": self.window}
