@@ -15,7 +15,7 @@ class MovieWatcher(threading.Thread):
             if self.frame_buffer.ready():
                 break
             else:
-                time.sleep(.5)
+                time.sleep(.01)
 
         # watch movie
         while True:
