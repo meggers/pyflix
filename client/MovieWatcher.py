@@ -1,26 +1,32 @@
 #!/usr/bin/python
 
-import time, threading
+import time
+import threading
 
 class MovieWatcher(threading.Thread):
-    
-    current_milli_time = staticmethod(lambda: int(round(time.time() * 1000)))
+        
 
     def __init__ (self, frame_buffer, movie_length):
         self.last_time = self.current_milli_time()
         self.current_frame = 0
         self.frame_buffer = frame_buffer
         self.movie_length = movie_length
-        threading.Thread.__init__ (self)
         self.times = []
+        threading.Thread.__init__ (self)
+        
+    # current_milli_time = staticmethod(lambda: int(round(time.time() * 1000)))
+    def current_milli_time(self):
+        return int(round(time.time() * 1000))
     
     def run(self):
+        global time
+        
         # wait until queue is buffered
         while True:
             if self.frame_buffer.ready():
                 break
             else:
-                time.sleep(.01)
+                time.sleep(0.01)
 
         # watch movie
         while self.current_frame < self.movie_length:
