@@ -13,9 +13,10 @@ class ServerManager():
         
     def start(self):
         port = 5005
+        start_window = 8
         
-        self.cons = [ServerConnection(self, ip, port, i * 8) for i, ip in enumerate(self.servers)]
-        self.highest_frame_requested = (4 * 8) - 1
+        self.cons = [ServerConnection(self, ip, port, i * start_window) for i, ip in enumerate(self.servers)]
+        self.highest_frame_requested = (4 * start_window) - 1
         
         for server in self.cons:
             server.start()
@@ -57,9 +58,9 @@ class ServerManager():
         # print "COMPLETE: "+id+", t = {}".format(self.cons[server_index].delay)
         
         if self.cons[server_index].frame < 29999:
-            self.cons[server_index].frame = self.highest_frame_requested
+            self.cons[server_index].frame = self.highest_frame_requested + 1
             self.cons[server_index].window = self.generate_window(self.cons[server_index])
-            self.highest_frame_requested = self.cons[server_index].frame + self.cons[server_index].window
+            self.highest_frame_requested += self.cons[server_index].window
 
             self.cons[server_index].start()
         elif self.total_flight_size() == 0:
@@ -130,14 +131,13 @@ class ServerConnection():
         self.receiving = False
         self.flight_size = 0
         
-        # if self.starting_frame + self.window - 1 > self.frame:
-        #     self.window -= self.frame - self.starting_frame
-        #     self.flight_size = self.window
-        #     self.starting_frame = self.frame
-        #     self.start()
-        # else:
-        #
-        self.manager.complete_queue.put(self.host)
+        if self.starting_frame + self.window - 1 > self.frame:
+            self.window -= self.frame - self.starting_frame
+            self.flight_size = self.window
+            self.starting_frame = self.frame
+            self.start()
+        else:
+            self.manager.complete_queue.put(self.host)
     
     @staticmethod
     def threaded_send_request(server, request):
