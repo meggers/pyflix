@@ -14,7 +14,7 @@ class ServerManager():
         
     def start(self):
         port = 5005
-        start_window = 100
+        start_window = 200
         
         self.cons = [ServerConnection(self, ip, port, i * start_window, start_window) for i, ip in enumerate(self.servers)]
         self.highest_frame_requested = (len(self.servers) * start_window) - 1
@@ -27,7 +27,7 @@ class ServerManager():
     def generate_window(self, connection):
         # maximum possible window size if delay of connection is approaching 0
         # relative to other delays
-        max_window = 125
+        max_window = 225
 
         # delays of each connection per frame
         delays = [ x.delay / x.window for x in self.cons ]
