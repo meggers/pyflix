@@ -14,7 +14,7 @@ class ServerManager():
         
     def start(self):
         port = 5005
-        start_window = 8
+        start_window = 32
         
         self.cons = [ServerConnection(self, ip, port, i * start_window, start_window) for i, ip in enumerate(self.servers)]
         self.highest_frame_requested = (len(self.servers) * start_window) - 1
