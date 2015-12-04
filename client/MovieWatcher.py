@@ -25,4 +25,4 @@ class MovieWatcher(threading.Thread):
                 print frame[0]
                 time.sleep(0.01)
             else:
-                time.sleep(0.0001)
+                time.sleep(0.001)
