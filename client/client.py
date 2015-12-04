@@ -7,7 +7,7 @@ from ConnectionHandler import *
 def main():
     servers = ["vm1" , "vm2", "vm3", "vm4"]
 
-    frame_buffer = FrameBuffer(0)
+    frame_buffer = FrameBuffer(32)
 
     movie_thread = MovieWatcher(frame_buffer)
     movie_thread.start()
