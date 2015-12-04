@@ -22,6 +22,8 @@ class RequestHandler(SocketServer.StreamRequestHandler):
             self.start_frame = int(request_message['frm'])
 
             if self.command == "Start":
+                
+                print "frm: {}, wnd: {}".format(self.start_frame, self.command)
 
                 for offset in range(self.window):
                     response = self.server.movie_data[self.start_frame + offset]
