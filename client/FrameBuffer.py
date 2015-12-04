@@ -21,6 +21,7 @@ class FrameBuffer:
         if return_frame != None and return_frame[0] != frame_number:
             print return_frame
             print frame_number
+            print self.free_size()
             return None
         
         try:
