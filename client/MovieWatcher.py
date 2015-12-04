@@ -38,8 +38,15 @@ class MovieWatcher(threading.Thread):
             print frame[0]
             time.sleep(0.01)
 
-
         print "Dumping data..."
+        target = open('timing_dump', 'w')
+        target.truncate()
+
+        for index, time in enumerate(self.times):
+            target.write("{},{}\n".format(index, time))
+
+        target.close()
+
         target = open('data_dump.csv', 'w')
         target.truncate()
 
@@ -49,7 +56,7 @@ class MovieWatcher(threading.Thread):
         for index, time in enumerate(sorted_times[2:]):
             running_sum += sorted_times[index]
             k = index + 2
-            s_k = running_sum / (10 * (k - 1))
+            s_k = running_sum / float(10 * (k - 1))
 
             target.write("{},{}\n".format(k, s_k))
 
