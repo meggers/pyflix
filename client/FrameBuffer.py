@@ -17,9 +17,9 @@ class FrameBuffer:
             return False
 
     def get_frame(self, frame_number):
-        return_frame = self.peek()
-        if return_frame != None and return_frame[0] != frame_number:
-            return None
+#        return_frame = self.peek()
+#        if return_frame != None and return_frame[0] != frame_number:
+#            return None
         
         try:
             item = self.buffer.get_nowait()
