@@ -24,42 +24,30 @@ class ServerManager():
         self.complete_queue.listen(self)
 
     def generate_window(self, connection):
-        return 100
-        
-        flight_sizes = [ x.flight_size for x in self.cons ]
-        total_flight_size = sum(flight_sizes) 
-        buffer_space = self.frame_queue.free_size()
-        request_amt = buffer_space - total_flight_size
+        # maximum possible window size if delay of connection was 0
+        max_window = 125
 
-        if request_amt <= 0:
-            # if we have requested as much as we have room for already
-            # just ask for a little bit, a frame will probably be read!
-            print "Window1: {}".format(1)
-            return 1
-        elif request_amt <= connection.window:
-            # if we need less than we asked for last time
-            print "Window2: {}".format(request_amt)
-            return request_amt
-        else:
-            # grab delays per packet for each connection and inverse weight proportion
-            delays = [ x.delay / x.window for x in self.cons ]
-            weight = sum(delays)/(connection.delay + sum(delays))
+        # delays of each connection
+        delays = [ x.delay / x.window for x in self.cons ]
 
-            # calculate window size as percentage of free space
-            window = int(weight * request_amt)
+        # weight of this connections delay in comparison with total delay
+        # if each delay is one this evaluates to:
+        # weight = 4/(1 + 4) = 4/5
+        weight = sum(delays)/(connection.delay + sum(delays))
 
-            # return window if window is greater than 1, else 1
-            # this is to ensure we still have delay data for connection
-            print "Window3: {}".format(max(1, window))
-            return max(1, window)
+        # window as a function of the maximum window and the weight of this connection
+        # when all delays are equal this evaluates to:
+        # 4/5 * 125 = 100 
+        window = int(weight * max_window)
+
+        # floor windows at 1 to avoid closing connections ?
+        return max(1, window)
     
     def window_complete(self, id):
         server_index = 0
         for index, server in enumerate(self.cons):
             if server.host == id:
                 server_index = index
-        
-        # print "COMPLETE: "+id+", t = {}".format(self.cons[server_index].delay)
         
         if self.cons[server_index].frame < 29999:
             self.cons[server_index].frame = self.highest_frame_requested + 1
@@ -71,10 +59,7 @@ class ServerManager():
             self.complete_queue.close()
             
     def total_flight_size(self):
-        fs = 0
-        for server in self.cons:
-            fs += server.flight_size
-        return fs
+        return sum([ server.flight_size for server in self.cons ])
        
     class CompleteQueue():
     
