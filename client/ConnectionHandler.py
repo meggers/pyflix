@@ -34,7 +34,7 @@ class ServerManager():
         # weight of this connections delay in comparison with total delay
         # if each delay is one this evaluates to:
         # weight = 4/(1 + 4) = 4/5
-        weight = sum(delays)/(connection.delay + sum(delays))
+        weight = float(sum(delays))/float(float(connection.delay/connection.window) + sum(delays))
 
         # window as a function of the maximum window and the weight of this connection
         # when all delays are equal this evaluates to:
