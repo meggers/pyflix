@@ -156,7 +156,7 @@ class ServerConnection():
                     data = data[server.frame_size:]
                     
                     if num_frames_needed == server.flight_size:
-                        self.delay = self.tock()
+                        server.delay = server.tock()
 
                     if server.manager.frame_queue.add_frame(frame_num, frame):
                         if server.frame < frame_num:
