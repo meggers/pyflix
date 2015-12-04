@@ -15,6 +15,7 @@ class MovieWatcher(threading.Thread):
             if self.frame_buffer.ready():
                 break
             else:
+                print "fuuuck"
                 time.sleep(.01)
 
         # watch movie
@@ -26,4 +27,5 @@ class MovieWatcher(threading.Thread):
                     print frame[0]
                 time.sleep(0.01)
             else:
+                print "fuuuck2"
                 time.sleep(0.0001)
