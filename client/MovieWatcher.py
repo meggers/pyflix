@@ -26,10 +26,10 @@ class MovieWatcher(threading.Thread):
             if self.frame_buffer.ready():
                 break
             else:
-                time.sleep(0.01)
+                continue
 
         # ready up
-        time.sleep(.5)
+        time.sleep(.3)
 
         # watch movie
         while self.current_frame < self.movie_length:

@@ -102,7 +102,7 @@ class ServerConnection():
         self.frame_size = 1024
         self.flight_size = 0
         self.receiving = False
-        self.delay = 1500 # in ms
+        self.delay = 850 # in ms
         self.starting_frame = frame
         
         # Create a socket (SOCK_STREAM means a TCP socket)
