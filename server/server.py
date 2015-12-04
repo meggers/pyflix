@@ -6,14 +6,14 @@ class RequestHandler(SocketServer.StreamRequestHandler):
     def handle(self):
         
         while 1:
-            try
+            try:
                 self.data = self.request.recv(1024)
             except:
                 break
 
             if not self.data:
                 break
-                
+
             self.data = self.data.strip()
             request_message = json.loads( self.data.strip() )
 
