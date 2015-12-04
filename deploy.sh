@@ -7,14 +7,14 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 RSA_ID="${DIR}/id_geni_ssh_rsa"
 
 # node names
-VM1="${1}@pcvm3-3.instageni.utc.edu"
-VM2="${1}@pcvm3-4.instageni.utc.edu"
-VM3="${1}@pcvm3-5.instageni.utc.edu"
-VM4="${1}@pcvm3-6.instageni.utc.edu"
-VM5="${1}@pcvm3-7.instageni.utc.edu"
-VM6="${1}@pcvm3-8.instageni.utc.edu"
-VM7="${1}@pcvm3-9.instageni.utc.edu"
-VM8="${1}@pcvm3-10.instageni.utc.edu"
+VM1="${1}@pcvm2-8.instageni.idre.ucla.edu"
+VM2="${1}@pcvm2-9.instageni.idre.ucla.edu"
+VM3="${1}@pcvm2-12.instageni.idre.ucla.edu"
+VM4="${1}@pcvm2-16.instageni.idre.ucla.edu"
+VM5="${1}@pcvm2-17.instageni.idre.ucla.edu"
+VM6="${1}@pcvm2-18.instageni.idre.ucla.edu"
+VM7="${1}@pcvm2-19.instageni.idre.ucla.edu"
+VM8="${1}@pcvm2-23.instageni.idre.ucla.edu"
 
 if [ "$2" == "seed" ]; then
     echo "GENERATING MOVIE DATA..."
