@@ -130,13 +130,14 @@ class ServerConnection():
         self.receiving = False
         self.flight_size = 0
         
-        if self.starting_frame + self.window - 1 > self.frame:
-            self.window -= self.frame - self.starting_frame
-            self.flight_size = self.window
-            self.starting_frame = self.frame
-            self.start()
-        else:
-            self.manager.complete_queue.put(self.host)
+        # if self.starting_frame + self.window - 1 > self.frame:
+        #     self.window -= self.frame - self.starting_frame
+        #     self.flight_size = self.window
+        #     self.starting_frame = self.frame
+        #     self.start()
+        # else:
+        #
+        self.manager.complete_queue.put(self.host)
     
     @staticmethod
     def threaded_send_request(server, request):
