@@ -5,17 +5,18 @@ from sys import *
 import threading, time, Queue, json
 
 class ServerManager():
-    def __init__(self, servers, frame_buffer):
+    def __init__(self, servers, frame_buffer, movie_length):
         self.highest_frame_requested = -1
         self.servers = servers
         self.frame_queue = frame_buffer
+        self.movie_length = movie_length
         self.complete_queue = ServerManager.CompleteQueue()
         
     def start(self):
         port = 5005
-        start_window = 8
+        start_window = 100
         
-        self.cons = [ServerConnection(self, ip, port, i * start_window) for i, ip in enumerate(self.servers)]
+        self.cons = [ServerConnection(self, ip, port, i * start_window, start_window) for i, ip in enumerate(self.servers)]
         self.highest_frame_requested = (len(self.servers) * start_window) - 1
         
         for server in self.cons:
@@ -50,13 +51,18 @@ class ServerManager():
             if server.host == id:
                 server_index = index
         
-        if self.cons[server_index].frame < 29999:
+        movie_length = self.movie_length
+        
+        if self.cons[server_index].frame < movie_length - 1 and self.highest_frame_requested < movie_length - 1:
             self.cons[server_index].frame = self.highest_frame_requested + 1
-            self.cons[server_index].window = self.generate_window(self.cons[server_index])
+            self.cons[server_index].window = min(movie_length - self.cons[server_index].frame, self.generate_window(self.cons[server_index]))
             self.highest_frame_requested += self.cons[server_index].window
 
             self.cons[server_index].start()
-        elif self.total_flight_size() == 0:
+        else:
+            self.cons[server_index].close()
+            
+        if self.total_flight_size() == 0:
             self.complete_queue.close()
             
     def total_flight_size(self):
@@ -117,6 +123,9 @@ class ServerConnection():
         self.flight_size = self.window
         self.receiving = True
         self.thread = threading.Thread(target=ServerConnection.threaded_send_request, args=(self, request)).start()
+        
+    def close(self):
+        self.sock.close()
     
     def request_complete(self):
         self.delay = self.tock()
