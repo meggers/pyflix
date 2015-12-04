@@ -44,7 +44,7 @@ class MovieWatcher(threading.Thread):
             running_sum += sorted_times[index]
             k = index + 2
             s_k = running_sum / (10 * (k - 1))
-            
-            target.write("{},{}".format(k, s_k))
+
+            target.write("{},{}\n".format(k, s_k))
 
         target.close()
