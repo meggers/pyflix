@@ -102,7 +102,7 @@ class ServerConnection():
         self.frame_size = 1024
         self.flight_size = 0
         self.receiving = False
-        self.delay = 850 # in ms
+        self.delay = 600 # in ms
         self.starting_frame = frame
         
         # Create a socket (SOCK_STREAM means a TCP socket)
@@ -128,7 +128,6 @@ class ServerConnection():
         self.sock.close()
     
     def request_complete(self):
-        self.delay = self.tock()
         self.receiving = False
         
         self.flight_size = 0
@@ -145,8 +144,6 @@ class ServerConnection():
         try:
             done = False
             data = ""
-            frames = ""
-            server.starting_frame = server.frame
             num_frames_needed = server.flight_size
             while not done:
                 # Receive data from the server
@@ -158,6 +155,9 @@ class ServerConnection():
                     frame = data[:server.frame_size]
                     data = data[server.frame_size:]
                     
+                    if num_frames_needed == server.flight_size:
+                        self.delay = self.tock()
+
                     if server.manager.frame_queue.add_frame(frame_num, frame):
                         if server.frame < frame_num:
                             server.frame = frame_num
